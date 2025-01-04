@@ -1,0 +1,7 @@
+apiVersion: v1
+data:
+  MYSQL_DATABASE: sqldb
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: db-config
