@@ -1,0 +1,108 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: "2025-01-10T04:27:14Z"
+  labels:
+    run: php
+  name: php
+  namespace: default
+  resourceVersion: "29226"
+  uid: c76af06d-d5b5-4e9e-9f7d-0d3aef9c4476
+spec:
+  containers:
+  - image: thuyein97/3tier
+    imagePullPolicy: Always
+    name: php
+    resources: {}
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-qfm5x
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  nodeName: k8smaster
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - name: kube-api-access-qfm5x
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2025-01-10T04:27:18Z"
+    status: "True"
+    type: PodReadyToStartContainers
+  - lastProbeTime: null
+    lastTransitionTime: "2025-01-10T04:27:14Z"
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: "2025-01-10T04:27:14Z"
+    message: 'containers with unready status: [php]'
+    reason: ContainersNotReady
+    status: "False"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: "2025-01-10T04:27:14Z"
+    message: 'containers with unready status: [php]'
+    reason: ContainersNotReady
+    status: "False"
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: "2025-01-10T04:27:14Z"
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - image: thuyein97/3tier
+    imageID: ""
+    lastState: {}
+    name: php
+    ready: false
+    restartCount: 0
+    started: false
+    state:
+      waiting:
+        message: Back-off pulling image "thuyein97/3tier"
+        reason: ImagePullBackOff
+  hostIP: 192.168.100.172
+  hostIPs:
+  - ip: 192.168.100.172
+  phase: Pending
+  podIP: 10.244.0.41
+  podIPs:
+  - ip: 10.244.0.41
+  qosClass: BestEffort
+  startTime: "2025-01-10T04:27:14Z"
